@@ -1,5 +1,5 @@
 import random as rand
-def getBackground(ref_genome, peaks):
+def getBackground(peaks):
     bg_seqs = []
     
     #Method 1: Random locations in genome
@@ -8,6 +8,8 @@ def getBackground(ref_genome, peaks):
         start = rand.randint(0, 57000001)
         end = start + peak_len
         chrom = peak[0]
-        #find the corresponding chromosome in the ref genome and extract the sequence using start and end
-        bg_seq = ""
+        RG = getRefGenome(chrom)
+        bg_seq = RG[start : end]
         bg_seqs.append(bg_seq)
+    
+    return bg_seqs
