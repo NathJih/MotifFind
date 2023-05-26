@@ -16,10 +16,10 @@ JasparMatrices.py
 usage: py JasperMatrices <JASPER file>
 
 getBackground.py
-
+Takes in a peaks file and outputs a list of background sequences for each peak for result validation
 
 getRefGenome.py
-Open the chromosome FASTA Format DNA and Protein Sequence Alignment file (fna) and create a single string of the genome 
-usage: py getRefGenome <fna file> ?? 
+Open the chromosome FASTA Format DNA and Protein Sequence Alignment file (fna) and create a single string of the chromosome sequence 
+usage: py getRefGenome <fna file> (helper method)
 
 SlidingScore.py
