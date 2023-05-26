@@ -1,5 +1,8 @@
 # code from lab, not adjusted 
 
+import numpy as np
+
+
 nucs = {"A": 0, "C": 1, "G": 2, "T": 3} # this might be helpful
 
 def ScoreSeq(pwm, sequence):
