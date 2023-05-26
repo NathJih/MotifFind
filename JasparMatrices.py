@@ -15,7 +15,8 @@ def JasparMatrices(file):
     jasparfile = open(file, 'r')
     line = jasparfile.readline()
     jaspar = Jaspar.Jaspar()
-
+    
+    n = 1
     # read the entire file
     while (len(line) != 0):
 
@@ -73,13 +74,14 @@ def JasparMatrices(file):
 
             # add motif info into dictionary in Jaspar class
             jaspar.add(motifname, matrix, threshold, length, tf, url)
+            print("finished " + str(n))
+            n += 1
 
         line = jasparfile.readline()
 
     # After adding all the motif into Jaspar class, output the motif dict
     # into a pickle file
     jaspar.store()
-    print(jaspar.matrixdict)
     return
 
 
