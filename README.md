@@ -4,7 +4,18 @@ This tool is a motif-finding tool that will plot the top 5 best-match motif sequ
 
 ## Requirements 
 This tool requires the following packages:
-- 
+
+<br>
+
+## Usage 
+***
+Follow the following steps if you choose to use our defalt Jaspar dataset for known motif
+
+```
+gunzip ReferenceGenome/chromosome*
+```
+
+
 
 ## Details 
 
