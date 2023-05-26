@@ -1,4 +1,6 @@
 import random as rand
+import getRefGenome
+
 def getBackground(peaks):
     bg_seqs = []
     
