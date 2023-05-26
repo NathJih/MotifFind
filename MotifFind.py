@@ -1,7 +1,12 @@
+import getRefGenome
 import random as rand
+
 def getBackground(peaks):
+    """
+    Helper method to get background sequences for analysis.
+    """
     bg_seqs = []
-    
+
     #Method 1: Random locations in genome
     for peak in peaks:
         peak_len = peak[3] - peak[2]
@@ -11,5 +16,6 @@ def getBackground(peaks):
         RG = getRefGenome(chrom)
         bg_seq = RG[start : end]
         bg_seqs.append(bg_seq)
-    
+
     return bg_seqs
+
