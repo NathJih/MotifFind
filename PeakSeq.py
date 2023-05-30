@@ -1,10 +1,21 @@
 import sys
-import GetRefGenome
 
-if len(sys.argv != 3):
+if len(sys.argv) != 3:
     raise Exception("Incorrect number of arguments, 3 expected.")
 
 peaks_file = sys.argv[1]
+
+class SequenceData:
+    PeakSeq = []
+    BackgroundSeq = []
+
+def GetRefGenome(chromosome):
+    RGFile = open("ReferenceGenome/chromosome" + str(chromosome) + ".fna")
+    RGLines = RGFile.readlines()
+    RefGen = ""
+    for i in range(1, len(RGLines)):
+        RefGen = RefGen + RGLines[i].strip()
+    return RefGen
 
 def PeakSeq(peaks_file):
     peakseqs = []
@@ -13,14 +24,16 @@ def PeakSeq(peaks_file):
     peakslines = peaks.readlines()
     # for each peak, extracts the specified region from the reference genome
     for pl in peakslines:
-        pl.split()
-        chrom = pl[0].split(":")
-        chromID = chrom[1]
+        pllist = pl.split("\t")
+        chrom = pllist[0]
+        chromID = chrom[3:]
+        print(chromID)
         ref_genome = GetRefGenome(chromID)
-        start = pl[1].split(":")
-        startSite = start[1]
-        end = pl[2].split(":")
-        endSite = end[1]
-        peakseqs.append(ref_genome[startSite - 1 : endSite])
+        startSite = pllist[1]
+        endSite = pllist[2]
+        peakseqs.append(ref_genome[int(startSite) - 1 : int(endSite)])
     return peakseqs
-PeakSeq(peaks_file)
+
+output = open("peakouttest1.txt", "w")
+for i in PeakSeq(peaks_file):
+    output.write(i + "\n")
