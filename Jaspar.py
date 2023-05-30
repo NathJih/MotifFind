@@ -1,14 +1,16 @@
 import pickle
 import sys
 import random
+import MotifFind
 # read in the arguments
 args = sys.argv 
 
 # check for the correct number of arguments
-if len(args) != 2:
-    raise Exception("Incorrect number of arguments")
+if len(args) != 3:
+    raise Exception("Incorrect number of arguments, 3 expected.")
 
 filename = args[1]
+peaks_file = args[2]
 
 class Jaspar:
     # initialize an empty dictionary
@@ -90,6 +92,9 @@ def JasparMatrices(file):
             jaspar.add(motifname, matrix, threshold, length, tf, url)
             print("finished " + str(n))
             n += 1
+
+            # compare motif to peak and background sequences (this needs to change)
+            list = MotifFind(jaspar, peaks_file)
 
         line = jasparfile.readline()
 

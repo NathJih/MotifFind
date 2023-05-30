@@ -1,4 +1,4 @@
-def getRefGenome(chromosome):
+def GetRefGenome(chromosome):
     RGFile = open("ReferenceGenome/chromosome" + str(chromosome) + ".fna")
     RGLines = RGFile.readlines()
     RefGen = ""
