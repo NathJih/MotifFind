@@ -93,7 +93,7 @@ def JasparMatrices(file):
             print("finished " + str(n))
             n += 1
 
-            # compare motif to peak and background sequences
+            # compare motif to peak and background sequences (this needs to change)
             list = MotifFind(jaspar, peaks_file)
 
         line = jasparfile.readline()
