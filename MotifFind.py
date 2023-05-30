@@ -70,3 +70,5 @@ def MotifFind(motif, peaks_file):
     # Fisher Exact test to calculate the p-value
     pval = ComputeEnrichment(len(peakseqs), peaks_count, len(bgseqs), bg_count)
     motif_list.append(pval)
+
+    return motif_list
