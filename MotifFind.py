@@ -2,6 +2,47 @@ import GetRefGenome
 import PeakSeq
 import random as rand
 import scipy.stats
+import sys
+import Jaspar
+
+arg_len = len(sys.argv)
+args = sys.argv
+j_flag = False
+o_flag = False
+
+# checks for correct command 
+if arg_len < 3:
+    raise Exception("Incorrect number of arguments, 3 expected.")
+elif arg_len > 4:
+    if args[3] == '-j':
+        # jasper input file 
+        jasperfile = args[4]
+        j_flag = True
+    elif args[3] == '-o':
+        if args[4].strip()[:-4] != '.txt':
+            raise Exception("Missing .txt after the file name.")
+        else:
+            # peak txt output file 
+            o_flag = True
+            peakseq_output = args[4]
+elif arg_len == 7:
+     # jasper input file
+    if args[5] == '-j':
+        j_flag = True
+        jasperfile = args[6]
+    elif args[5] == '-o':
+        if args[6].strip()[:-4] != '.txt':
+            raise Exception("Missing .txt after the file name.")
+        else:
+            # peak txt output file 
+            o_flag = True
+            peakseq_output = args[6]
+else:
+    raise Exception("Incorrect arguments.")
+
+peakfile = args[1]
+outputfile = open(args, "w")
+    
 
 def getBackground(peaks):
     """
@@ -50,7 +91,8 @@ def ComputeEnrichment(peak_total, peak_motif, bg_total, bg_motif):
     odds, pval = scipy.stats.fisher_exact(table)
     return pval
 
-def MotifFind(motif, peaks_file):
+# still need to figure out where to get the motif and stuff 
+def MotifFind(motif):
     motif_list = []
 
     # add the motif name to the list
@@ -58,7 +100,7 @@ def MotifFind(motif, peaks_file):
     motif_pwm = motif[0]
 
     # find the number of peak sequences that match the motif 
-    peakseqs = PeakSeq(peaks_file)
+    peakseqs = PeakSeq(peakfile)
     peaks_count = FindMatch(motif_pwm, peakseqs)
     motif_list.append(peaks_count)
 
