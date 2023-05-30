@@ -1,4 +1,5 @@
 import sys
+import GetRefGenome
 
 if len(sys.argv != 3):
     raise Exception("Incorrect number of arguments, 3 expected.")
@@ -15,11 +16,11 @@ def PeakSeq(peaks_file):
         pl.split()
         chrom = pl[0].split(":")
         chromID = chrom[1]
-        ref_genome = getRefGenome(chromID)
+        ref_genome = GetRefGenome(chromID)
         start = pl[1].split(":")
         startSite = start[1]
         end = pl[2].split(":")
         endSite = end[1]
-        peakseqs.append(ref_genome[startSite - 1 : endSite]
+        peakseqs.append(ref_genome[startSite - 1 : endSite])
     return peakseqs
 PeakSeq(peaks_file)
