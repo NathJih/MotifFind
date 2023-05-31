@@ -8,7 +8,10 @@ peaks_file = sys.argv[1]
 class SequenceData:
     PeakSeq = []
     BackgroundSeq = []
+<<<<<<< HEAD
     RefGen = {}
+=======
+>>>>>>> 33a6ba012b1be0b0930d31727f288dd403c3e2e1
 
 def GetRefGenome(chromosome):
     RGFile = open("ReferenceGenome/chromosome" + str(chromosome) + ".fna")
