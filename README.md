@@ -38,7 +38,7 @@ gunzip ReferenceGenome/chromosome*
 
 To specify your own Jaspar motif dataset, you can browse and download jaspar file using the link <https://jaspar.genereg.net/collection/core/> Run the following command to output a compiled jaspar `.p` file
 ```
-py Jasper <JASPER_reference_file> <Jasper_Output_file>
+python Jasper <JASPER_reference_file> <Jasper_Output_file>
 ```
 `<JASPER_reference_file>`: jaspar file downloaded from <https://jaspar.genereg.net/> <br>
 `<Jasper_Output_file>`: name of the output jaspar pickle file. File name must have a `.p` suffix<br>
