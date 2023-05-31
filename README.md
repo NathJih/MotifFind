@@ -5,7 +5,13 @@ This tool is a motif-finding tool that will plot the top 5 best-match motif sequ
 
 ## Requirements 
 ### Download the tool:
-This tool requires to download the package named `Motif Finding`. <br>
+This tool requires to download the package named `Motif_Find`. <br>
+
+To run this tool, make sure to have the `random`, `scipy`, `pickle`, and `pandas` libraries installed. You can install them using `pip`:
+
+```
+pip install random scipy pickle pandas 
+```
 
 ### File details:
 #### Reference Files:
@@ -32,7 +38,7 @@ gunzip ReferenceGenome/chromosome*
 
 To specify your own Jaspar motif dataset, you can browse and download jaspar file using the link <https://jaspar.genereg.net/collection/core/> Run the following command to output a compiled jaspar `.p` file
 ```
-py Jasper <JASPER_reference_file> <Jasper_Output_file>
+python Jasper <JASPER_reference_file> <Jasper_Output_file>
 ```
 `<JASPER_reference_file>`: jaspar file downloaded from <https://jaspar.genereg.net/> <br>
 `<Jasper_Output_file>`: name of the output jaspar pickle file. File name must have a `.p` suffix<br>
@@ -42,7 +48,7 @@ py Jasper <JASPER_reference_file> <Jasper_Output_file>
 ### Step 3: Run motif finding
 Use your peak file to run our motif finding tool using the following command:
 ```
-py MotifFind <peak_input_file> <output_file> [-j <Jasper_input_file>] [-o <peakseq_output_file>]
+python MotifFind <peak_input_file> <output_file> [-j <Jasper_input_file>] [-o <peakseq_output_file>]
 ```
 `<peak_input_file>`: specify input file in peak file format <br>
 `<output_file>`: specify output `.html` file name for motif table <br>
