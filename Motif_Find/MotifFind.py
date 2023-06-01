@@ -3,13 +3,15 @@ import scipy.stats
 import sys
 import pickle
 import pandas as pd
+import seqlogo
+import os
 
 arg_len = len(sys.argv)
 args = sys.argv
 j_flag = False
 o_flag = False
 
-jasperfile = "jaspar.p"
+jasparfile = "jaspar.p"
 # checks for correct command 
 if arg_len < 3:
     raise Exception("Incorrect number of arguments, 3 expected.")
@@ -52,20 +54,13 @@ class SequenceData:
 
     def GetRefGenome(self):
         self.RefG = pickle.load(open("GRCh38p14.p", "rb"))
-        # chromosome = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,"X","Y"]
-        # for chr in chromosome:
-        #     RGFile = open("ReferenceGenome/chromosome" + str(chr) + ".fna")
-        #     RGLines = RGFile.readlines()
-        #     RefGen = ""
-        #     for i in range(1, len(RGLines)):
-        #         RefGen = RefGen + RGLines[i].strip()
-        #     self.RefG["chromosome" + str(chr)] = RefGen
-        # return
 
     def FindSeq(self, peaks_file):
+
         # open up the file and extract the lines 
         peaks = open(peaks_file)
         peakslines = peaks.readlines()
+
         # for each peak, extracts the specified region from the reference genome
         for pl in peakslines:
             # get basic peak sequence information
@@ -124,12 +119,22 @@ def ComputeEnrichment(peak_total, peak_motif, bg_total, bg_motif):
 def sortFn(list):
     return list[3]
 
+def output(top5motif, jaspar):
+    for motif in top5motif:
+        # make seqlogo PWM object
+        seq_pwm = seqlogo.Pwm(jaspar[motif[1]][0])
+        # Convert to ppm needed for plotting
+        seq_ppm = seqlogo.Ppm(seqlogo.pwm2ppm(seq_pwm))
+        graph = seqlogo.seqlogo(seq_ppm, ic_scale = True, format = 'png', size = 'medium')
+    
+    
+
 # still need to figure out where to get the motif and stuff 
 def MotifFind():
     SeqData = SequenceData()
     SeqData.GetRefGenome()
     SeqData.FindSeq(peakfile)
-    motifs = pickle.load(open(jasperfile, "rb"))
+    motifs = pickle.load(open(jasparfile, "rb"))
 
     motif_list = []
     nummotif = len(motifs)
@@ -168,6 +173,8 @@ def MotifFind():
         output = open(peakseq_output, "w")
         for i in SeqData.PeakSeq:
             output.write(i+"\n")
+
+    output(result, motifs)
 
     return result
 
