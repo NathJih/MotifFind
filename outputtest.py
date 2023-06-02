@@ -1,17 +1,29 @@
 import seqlogo
 import pickle
 import numpy as np
+import logomaker as lm
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def output(pwm):
     # make seqlogo PWM object
-    seq_pwm = seqlogo.Pwm(pwm)
+    #seq_pwm = seqlogo.Pwm(pwm)
     # Convert to ppm needed for plotting
-    seq_ppm = seqlogo.Ppm(seqlogo.pwm2ppm(seq_pwm))
-    seqlogo.seqlogo(seq_ppm, ic_scale = True, format = 'png', size = 'medium')
+    #seq_ppm = seqlogo.Ppm(seqlogo.pwm2ppm(seq_pwm))
+    #seqlogo.seqlogo(seq_ppm, ic_scale = True, format = 'png', size = 'medium')
+
+    # different package: LogoMaker
+    rows = []
+    for i in range(0, len(pwm)):
+        rows.append(str(i + 1))
+    pwm = pd.DataFrame(data=pwm, columns=["A","C","G","T"])
+    logo = lm.Logo(pwm, font_name='Arial')
+    return logo
     
 motifs = pickle.load(open("Motif_Find/Jaspar.p", "rb"))
 pwm = np.array(motifs["MA0139.1"][0]).transpose()
 output(pwm)
+plt.show()
 # output(pwm)
 
 # # Sox2
