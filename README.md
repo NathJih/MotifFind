@@ -48,7 +48,8 @@ python Jasper <JASPER_reference_file> <Jasper_Output_file>
 ### Step 3: Run motif finding
 Use your peak file to run our motif finding tool using the following command:
 ```
-python MotifFind <peak_input_file> <output_file> [-j <Jasper_input_file>] [-o <peakseq_output_file>]
+cd Motif_Find
+python MotifFind.py <peak_input_file> <output_file> [-j <Jasper_input_file>] [-o <peakseq_output_file>]
 ```
 `<peak_input_file>`: specify input file in peak file format <br>
 `<output_file>`: specify output `.html` file name for motif table <br>
