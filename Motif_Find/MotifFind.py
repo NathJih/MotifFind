@@ -24,12 +24,12 @@ elif arg_len > 4:
         jasperfile = args[4]
         j_flag = True
     elif args[3] == '-o':
-        if args[4].strip()[:-4] != '.txt':
-            raise Exception("Missing .txt after the file name.")
-        else:
-            # peak txt output file 
-            o_flag = True
-            peakseq_output = args[4]
+        # if args[4].strip()[:-4] != '.txt':
+        #     raise Exception("Missing .txt after the file name.")
+        # else:
+        # peak txt output file 
+        o_flag = True
+        peakseq_output = args[4]
 elif arg_len == 7:
      # jasper input file
     if args[5] == '-j':
@@ -56,7 +56,9 @@ class SequenceData:
         self.RefG = {}
 
     def GetRefGenome(self):
-        self.RefG = pickle.load(open("GRCh38p14.p", "rb"))
+        # self.RefG = pickle.load(open("/Users/lxppc/desktop/Spring 2023/CSE 185/GRCh38p14.p", "rb"))
+        self.RefG = pickle.load(open("GRCh38p14test.p", "rb"))
+        # print(self.RefG)
 
     def FindSeq(self, peaks_file):
 
@@ -179,14 +181,16 @@ def MotifFind():
 
     # Output the peak sequences in a file specified by user
     if (o_flag == True):
-        output = open(peakseq_output, "w")
+        output = open(peakseq_output + ".txt", "w")
         for i in SeqData.PeakSeq:
             output.write(i+"\n")
+    
+    print(SeqData.PeakSeq)
 
-    Output(motif_list[:5], motifs)
+    # Output(motif_list[:5], motifs)
 
     return result
 
 result = MotifFind()
-df = pd.DataFrame(result, columns = ['Motif Name', '# of peak sequences', '# of background sequences', 'p-value'])
-print(df)
+# df = pd.DataFrame(result, columns = ['Motif Name', '# of peak sequences', '# of background sequences', 'p-value'])
+# print(df)
