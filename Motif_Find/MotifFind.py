@@ -1,9 +1,11 @@
 import random as rand
+from matplotlib import pyplot as plt
 import numpy as np
 import scipy.stats
 import sys
 import pickle
 import pandas as pd
+import logomaker as lm
 import seqlogo
 import os
 
@@ -121,17 +123,18 @@ def sortFn(list):
     return list[3]
 
 def Output(top5motif, motifs):
-    out_file = open("../Output/motif_find.out", "w")
+    path = './Graphs'
+    if not os.path.exists(path):
+        os.mkdir(path)
     for motif in top5motif:
-        print(motifs[motif[0]][0])
-        # convert to ndarray
-        curr = np.array(motifs[motif[0]][0])
-        # make seqlogo PWM object 
-        seq_pwm = seqlogo.Pwm(curr)
-        # Convert to ppm needed for plotting
-        seq_ppm = seqlogo.Ppm(seqlogo.pwm2ppm(seq_pwm))
-        graph = seqlogo.seqlogo(seq_ppm, ic_scale = True, format = 'png', size = 'medium')
-        out_file.write(graph)
+        pwm = np.array(motifs[motif[0]][0]).transpose()
+        rows = []
+        for i in range(0, len(pwm)):
+            rows.append(str(i + 1))
+        pwm = pd.DataFrame(data=pwm, columns=["A","C","G","T"])
+        lm.Logo(pwm, font_name='Arial')
+        plt.savefig('Graphs/' + motif[0] + '.jpg', format='jpg')
+
     
     
 

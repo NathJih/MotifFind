@@ -58,3 +58,6 @@ python MotifFind.py <peak_input_file> <output_file> [-j <Jasper_input_file>] [-o
 * defalt: `Jasper.p` as the jaspar pickle file for human motifs <br>
 
 `[-o <peakseq_output_file>]`: output a `.txt` file with specific peak file sequences. Apecifty the `.txt` file name after `-o`
+
+Example usage: (note, make sure you are in the Motif_Find directory)
+`python MotifFind.py ../TestFiles/CTCF.bed output.html` 

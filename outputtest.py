@@ -22,8 +22,8 @@ def output(pwm):
     
 motifs = pickle.load(open("Motif_Find/Jaspar.p", "rb"))
 pwm = np.array(motifs["MA0139.1"][0]).transpose()
-output(pwm)
-plt.show()
+logo = output(pwm)
+plt.savefig("logo", format='png')
 # output(pwm)
 
 # # Sox2
