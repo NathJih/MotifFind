@@ -1,4 +1,5 @@
 import random as rand
+import numpy as np
 import scipy.stats
 import sys
 import pickle
@@ -119,10 +120,13 @@ def ComputeEnrichment(peak_total, peak_motif, bg_total, bg_motif):
 def sortFn(list):
     return list[3]
 
-def output(top5motif, jaspar):
+def Output(top5motif, motifs):
     for motif in top5motif:
-        # make seqlogo PWM object
-        seq_pwm = seqlogo.Pwm(jaspar[motif[1]][0])
+        print(motifs[motif[0]][0])
+        # convert to ndarray
+        curr = np.array(motifs[motif[0]][0])
+        # make seqlogo PWM object 
+        seq_pwm = seqlogo.Pwm(curr)
         # Convert to ppm needed for plotting
         seq_ppm = seqlogo.Ppm(seqlogo.pwm2ppm(seq_pwm))
         graph = seqlogo.seqlogo(seq_ppm, ic_scale = True, format = 'png', size = 'medium')
@@ -174,7 +178,7 @@ def MotifFind():
         for i in SeqData.PeakSeq:
             output.write(i+"\n")
 
-    output(result, motifs)
+    Output(motif_list[:5], motifs)
 
     return result
 

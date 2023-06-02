@@ -7,10 +7,10 @@ This tool is a motif-finding tool that will plot the top 5 best-match motif sequ
 ### Download the tool:
 This tool requires to download the package named `Motif_Find`. <br>
 
-To run this tool, make sure to have the `random`, `scipy`, `pickle`, and `pandas` libraries installed. You can install them using `pip`:
+To run this tool, make sure to have the `random`, `scipy`, `pickle`, `seqlogo` and `pandas` libraries installed. You can install them using `pip`:
 
 ```
-pip install random scipy pickle pandas 
+pip install random scipy pickle seqlogo pandas 
 ```
 
 ### File details:
