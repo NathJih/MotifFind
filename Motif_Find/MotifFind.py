@@ -123,14 +123,18 @@ def sortFn(list):
     return list[3]
 
 def Output(top5motif, motifs):
+    path = './Graphs'
+    if not os.path.exists(path):
+        os.mkdir(path)
     for motif in top5motif:
         pwm = np.array(motifs[motif[0]][0]).transpose()
         rows = []
         for i in range(0, len(pwm)):
             rows.append(str(i + 1))
         pwm = pd.DataFrame(data=pwm, columns=["A","C","G","T"])
-        logo = lm.Logo(pwm, font_name='Arial')
+        lm.Logo(pwm, font_name='Arial')
         plt.savefig('Graphs/' + motif[0] + '.jpg', format='jpg')
+
     
     
 
