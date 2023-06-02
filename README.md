@@ -15,21 +15,21 @@ pip install random scipy pickle seqlogo pandas
 
 ### File details:
 #### Reference Files:
-`ReferenceGenome`: zipped folder with all the human GRCh38.p14 reference genome fasta file by chromosomes <br>
+`GRCh38p14.p`: python pickle file with the human GRCh38.p14 reference genome sequence divided by chromosomes (optional: to create the reference genome file locally, see below) <br>
 `Jaspar.p`: pickle files with a dictionary that stored all the motif informations from Jaspar
 
 #### Python Files:
 `Jaspar.py`: use to prepare known motif with PWM matrices, threshold, and basic informations. Running Jaspar.py will output `Jaspar.p` <br>
-`MotifFind.py`: take a peak file specified by user, and output the top 5 most enriched motif with motif graph, p-value, and basic motif informations<br>
+`MotifFind.py`: take a peak file specified by user, and output the top 5 most enriched motif with motif graph, p-value, and basic motif informations <br>
+`GetRefGenome.py`: takes in a reference genome fasta file and returns a pickle file with only the "primary assemblies" of each chromosome to be used by other methods <br>
 <br>
 
 ## Usage 
 
 ### Step 1: Prepare for reference genome
-To run motif finding, you will first need to unzip the `.gz` chromosome reference sequence fasta files in the `ReferenceGenome` folder. You can unzip them using the command:
+To run motif finding, you will first need the reference genome pickle file, which can be obtained either by downloading it from this link: , or by recreating it locally with your own reference genome fasta file (GRCh38p14 recommended). You can  create the file by using the command:
 ```
-unzip ReferenceGenome
-gunzip ReferenceGenome/chromosome*
+python GetRefGenome.py <reference genome fasta file>
 ```
 <br>
 
