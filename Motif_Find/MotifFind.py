@@ -121,6 +121,7 @@ def sortFn(list):
     return list[3]
 
 def Output(top5motif, motifs):
+    out_file = open("../Output/motif_find.out", "w")
     for motif in top5motif:
         print(motifs[motif[0]][0])
         # convert to ndarray
@@ -130,6 +131,7 @@ def Output(top5motif, motifs):
         # Convert to ppm needed for plotting
         seq_ppm = seqlogo.Ppm(seqlogo.pwm2ppm(seq_pwm))
         graph = seqlogo.seqlogo(seq_ppm, ic_scale = True, format = 'png', size = 'medium')
+        out_file.write(graph)
     
     
 
