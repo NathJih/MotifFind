@@ -8,46 +8,42 @@ import pandas as pd
 import logomaker as lm
 import seqlogo
 import os
+import getopt
 
-arg_len = len(sys.argv)
-args = sys.argv
-j_flag = False
 o_flag = False
 
-jasparfile = "jaspar.p"
-# checks for correct command 
-if arg_len < 3:
-    raise Exception("Incorrect number of arguments, 3 expected.")
-elif arg_len > 4:
-    if args[3] == '-j':
-        # jasper input file 
-        jasperfile = args[4]
-        j_flag = True
-    elif args[3] == '-o':
-        # if args[4].strip()[:-4] != '.txt':
-        #     raise Exception("Missing .txt after the file name.")
-        # else:
-        # peak txt output file 
-        o_flag = True
-        peakseq_output = args[4]
-elif arg_len == 7:
-     # jasper input file
-    if args[5] == '-j':
-        j_flag = True
-        jasperfile = args[6]
-    elif args[5] == '-o':
-        if args[6].strip()[:-4] != '.txt':
-            raise Exception("Missing .txt after the file name.")
-        else:
-            # peak txt output file 
-            o_flag = True
-            peakseq_output = args[6]
-# else:
-#     raise Exception("Incorrect arguments.")
-
+args = sys.argv
 peakfile = args[1]
-# outputfile = open(args, "w")
+outtable = args[2]
+
+argv = args[3:]
+instruction = "Expected: python MotifFind.py <peak_input_file> <output_file> -r <reference_sequence_pickle_file> [-j <Jasper_input_file>] [-o <peakseq_output_file>]"
+if len(args) < 5:
+    raise Exception("Incorrect number of arguments, 5 expected.\n" + instruction)
+
+try:
+    opts, args = getopt.getopt(argv, "r:j:o:")
     
+except:
+    print("Error. \n")
+    print(instruction)
+
+ref_file = ""
+jasparfile = "jaspar.p"
+
+for opt, arg in opts:
+    if opt in ['-r', '--first_name']:
+        ref_file = arg
+    elif opt in ['-j', '--last_name']:
+        jasparfile = arg
+    elif opt in ['-o', '--last_name']:
+        peakseq_output = arg
+        o_flag = True
+
+getrefins = "Please refer to GetRefGenome"
+if ref_file=="":
+    raise Exception("Didn't specify reference genome.\n" + instruction + "\n" + getrefins)
+
 class SequenceData:
 
     def __init__(self):
@@ -57,7 +53,7 @@ class SequenceData:
 
     def GetRefGenome(self):
         # self.RefG = pickle.load(open("/Users/lxppc/desktop/Spring 2023/CSE 185/GRCh38p14.p", "rb"))
-        self.RefG = pickle.load(open("GRCh38p14test.p", "rb"))
+        self.RefG = pickle.load(open(ref_file, "rb"))
         # print(self.RefG)
 
     def FindSeq(self, peaks_file):
@@ -177,7 +173,7 @@ def MotifFind():
 
     motif_list.sort(reverse=False, key=sortFn)
     
-    result = motif_list[0:20]
+    result = motif_list[0:5]
 
     # Output the peak sequences in a file specified by user
     if (o_flag == True):
@@ -185,12 +181,12 @@ def MotifFind():
         for i in SeqData.PeakSeq:
             output.write(i+"\n")
     
-    print(SeqData.PeakSeq)
+    # print(SeqData.PeakSeq)
 
-    # Output(motif_list[:5], motifs)
+    Output(motif_list[:5], motifs)
 
     return result
 
 result = MotifFind()
-# df = pd.DataFrame(result, columns = ['Motif Name', '# of peak sequences', '# of background sequences', 'p-value'])
-# print(df)
+df = pd.DataFrame(result, columns = ['Motif Name', '# of peak sequences', '# of background sequences', 'p-value'])
+print(df)
