@@ -26,14 +26,14 @@ pip install random scipy pickle seqlogo pandas
 
 ## Usage 
 
-### Step 1: Prepare for reference genome
-To run motif finding, you will first need the reference genome pickle file, which can be obtained either by downloading it from this link: , or by recreating it locally with your own reference genome fasta file (GRCh38p14 recommended). You can  create the file by using the command:
+### Step 1: Prepare the reference genome
+To run motif finding, you will first need the reference genome pickle file, which can be obtained either by downloading it from this link: https://drive.google.com/uc?export=download&id=1TnI-1oExDtkpbal4kAWvOTWnuh7ksdmW, or by recreating it locally with your own reference genome fasta file (GRCh38p14 recommended). You can  create the file by using the command:
 ```
 python GetRefGenome.py <reference genome fasta file>
 ```
 <br>
 
-### Step 2 (optional): Prepare for jaspar reference motif
+### Step 2 (optional): Prepare the jaspar reference motif
 ***Note***: you can skip this step if you want to use the defalt human motifs dataset
 
 To specify your own Jaspar motif dataset, you can browse and download jaspar file using the link <https://jaspar.genereg.net/collection/core/> Run the following command to output a compiled jaspar `.p` file
