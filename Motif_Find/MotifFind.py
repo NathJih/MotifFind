@@ -33,7 +33,7 @@ except:
     print(instruction)
 
 ref_file = ""
-jasparfile = "jaspar.p"
+jasparfile = "Jaspar.p"
 
 for opt, arg in opts:
     if opt in ['-r', '--first_name']:
