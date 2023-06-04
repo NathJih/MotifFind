@@ -18,7 +18,7 @@ peakfile = args[1]
 outtable = args[2]
 
 argv = args[3:]
-instruction = "Expected: python MotifFind.py <peak_input_file> <output_file> -r <reference_sequence_pickle_file> [-j <Jasper_input_file>] [-o <peakseq_output_file>]"
+instruction = "Expected: python MotifFind.py <peak_input_bed_file> <output_file> -r <reference_sequence_pickle_file> [-j <Jasper_input_file>] [-o <peakseq_output_file>]"
 
 # test the require number of arguments
 if len(args) < 5:
@@ -82,8 +82,10 @@ class SequenceData:
             
             # get basic peak sequence information
             pllist = pl.split("\t")
+            print(pllist)
             chrom = pllist[0]
-            chromID = chrom[3:]
+            chromID = chrom.strip()
+            # chromID = chrom[3:]
             ref_genome = self.RefG["chromosome" + chromID]
 
             # get peak sequence
@@ -117,6 +119,7 @@ def ScoreSeq(matrix,seq):
         
         score += matrix[nucs[seq[i]]][i]
 
+    print(score)
     return score
 
 # takes params
@@ -145,10 +148,10 @@ def ComputeEnrichment(peak_total, peak_motif, bg_total, bg_motif):
     return pval
 
 def sortFn(list):
-    return list[3]
+    return list[1]
 
 def Output(top5motif, motifs):
-    path = './Graphs'
+    path = './' + outtable
     if not os.path.exists(path):
         os.mkdir(path)
     for motif in top5motif:
@@ -158,7 +161,7 @@ def Output(top5motif, motifs):
             rows.append(str(i + 1))
         pwm = pd.DataFrame(data=pwm, columns=["A","C","G","T"])
         lm.Logo(pwm, font_name='Arial')
-        plt.savefig('Graphs/' + motif[0] + '.jpg', format='jpg')
+        plt.savefig(outtable + '/' + motif[0] + '.jpg', format='jpg')
 
     
     
@@ -168,6 +171,7 @@ def MotifFind():
     SeqData = SequenceData()
     SeqData.GetRefGenome()
     SeqData.FindSeq(peakfile)
+    print(SeqData.PeakSeq)
     motifs = pickle.load(open(jasparfile, "rb"))
 
     motif_list = []
@@ -200,7 +204,7 @@ def MotifFind():
 
         motif_list.append(list)
 
-        print("Processing......  " + str(i) + "/" + str(nummotif) + "\n")
+        # print("Processing......  " + str(i) + "/" + str(nummotif) + "\n")
 
     motif_list.sort(reverse=False, key=sortFn)
     
@@ -222,4 +226,5 @@ result = MotifFind()
 df = pd.DataFrame(result, columns = ['Motif Name', 'p-value', '# Target Sequences', "% of Target Sequences", 
                                      '# Background Sequences',"% of Background Sequences", "Motif Documentation"])
 
-df.to_csv(outtable+".csv")
+df.to_csv(outtable + "/" + outtable + ".csv")
+print(df)
