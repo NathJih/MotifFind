@@ -34,7 +34,7 @@ python GetRefGenome.py <reference genome fasta file>
 <br>
 
 ### Step 2 (optional): Prepare the jaspar reference motif
-***Note***: you can skip this step if you want to use the defalt human motifs dataset
+***Note***: you can skip this step if you want to use the default human motifs dataset
 
 To specify your own Jaspar motif dataset, you can browse and download jaspar file using the link <https://jaspar.genereg.net/collection/core/> Run the following command to output a compiled jaspar `.p` file
 ```
@@ -54,9 +54,9 @@ python MotifFind.py <peak_input_file> <output_file> -r <reference_sequence_pickl
 `<output_file>`: specify output `.html` file name for motif table <br>
 `[-j <Jasper_input_file>]`: 
 * optional: specify a specific jaspar pickle file you outputed from step 2
-* defalt: `Jasper.p` as the jaspar pickle file for human motifs <br>
+* default: `Jasper.p` as the jaspar pickle file for human motifs <br>
 
-`[-o <peakseq_output_file>]`: output a `.txt` file with specific peak file sequences. Apecifty the `.txt` file name after `-o`
+`[-o <peakseq_output_file>]`: output a `.txt` file with specific peak file sequences. Specify the `.txt` file name after `-o`
 
 Example usage: (note, make sure you are in the Motif_Find directory)
 `python MotifFind.py ../TestFiles/CTCF.bed output.html` 
