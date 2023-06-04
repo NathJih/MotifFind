@@ -34,7 +34,7 @@ python GetRefGenome.py <reference genome fasta file>
 <br>
 
 ### Step 2 (optional): Prepare the jaspar reference motif
-***Note***: you can skip this step if you want to use the defalt human motifs dataset
+***Note***: you can skip this step if you want to use the default human motifs dataset
 
 To specify your own Jaspar motif dataset, you can browse and download jaspar file using the link <https://jaspar.genereg.net/collection/core/> Run the following command to output a compiled jaspar `.p` file
 ```
