@@ -85,6 +85,8 @@ class SequenceData:
             print(pllist)
             chrom = pllist[0]
             chromID = chrom.strip()
+            if "chr" in chromID:
+                chromID = chromID[3:]
             # chromID = chrom[3:]
             ref_genome = self.RefG["chromosome" + chromID]
 
