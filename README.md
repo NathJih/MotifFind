@@ -54,7 +54,7 @@ python MotifFind.py <peak_input_file> <output_file> -r <reference_sequence_pickl
 `<output_file>`: specify output `.html` file name for motif table <br>
 `[-j <Jasper_input_file>]`: 
 * optional: specify a specific jaspar pickle file you outputed from step 2
-* defalt: `Jasper.p` as the jaspar pickle file for human motifs <br>
+* default: `Jasper.p` as the jaspar pickle file for human motifs <br>
 
 `[-o <peakseq_output_file>]`: output a `.txt` file with specific peak file sequences. Apecifty the `.txt` file name after `-o`
 
