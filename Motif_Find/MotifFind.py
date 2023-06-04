@@ -9,6 +9,7 @@ import logomaker as lm
 import seqlogo
 import os
 import getopt
+import math
 
 o_flag = False
 
@@ -18,12 +19,15 @@ outtable = args[2]
 
 argv = args[3:]
 instruction = "Expected: python MotifFind.py <peak_input_file> <output_file> -r <reference_sequence_pickle_file> [-j <Jasper_input_file>] [-o <peakseq_output_file>]"
+
+# test the require number of arguments
 if len(args) < 5:
     raise Exception("Incorrect number of arguments, 5 expected.\n" + instruction)
 
+# parse the arguments
 try:
     opts, args = getopt.getopt(argv, "r:j:o:")
-    
+
 except:
     print("Error. \n")
     print(instruction)
@@ -41,21 +45,32 @@ for opt, arg in opts:
         o_flag = True
 
 getrefins = "Please refer to GetRefGenome"
+
+# through error if user did not specify reference genome
 if ref_file=="":
     raise Exception("Didn't specify reference genome.\n" + instruction + "\n" + getrefins)
 
+# for each SequenceData object, store:
+#   <list> PeakSeq: store all the sequence in the peak file
+#   <list> BackgroundSeq: store all the background sequence generated based on the peak file
+#   <dict> RefG: store the reference genome sequence by chromosomes
+#       <string> key: chromosome #
+#       <string> value: genome sequence
 class SequenceData:
 
+    # create the object
     def __init__(self):
         self.PeakSeq = []
         self.BackgroundSeq = []
         self.RefG = {}
 
+    # load the reference genome data into variable RefG
     def GetRefGenome(self):
-        # self.RefG = pickle.load(open("/Users/lxppc/desktop/Spring 2023/CSE 185/GRCh38p14.p", "rb"))
         self.RefG = pickle.load(open(ref_file, "rb"))
-        # print(self.RefG)
 
+    # Generate PeakSeq and BackgroundSeq
+    # param:
+    #   peaks_file: name of the peak file
     def FindSeq(self, peaks_file):
 
         # open up the file and extract the lines 
@@ -64,6 +79,7 @@ class SequenceData:
 
         # for each peak, extracts the specified region from the reference genome
         for pl in peakslines:
+            
             # get basic peak sequence information
             pllist = pl.split("\t")
             chrom = pllist[0]
@@ -80,16 +96,27 @@ class SequenceData:
             chrlen = len(ref_genome)
             bgstart = rand.randint(0, chrlen-seqlen)
             self.BackgroundSeq.append(ref_genome[bgstart: bgstart+seqlen])
+        
         return
 
-
+# calculate sequence's PWM score based on specific PWM matrix
+# param:
+#   matrix: PWM [4 x sequence_length] matrix
+#   seq: DNA sequence the method will use to calculate score on
 def ScoreSeq(matrix,seq):
+    
+    # specify rows by base
     nucs = {"A": 0, "C": 1, "G": 2, "T": 3, "a": 0, "c": 1, "g": 2, "t":3}
     score = 0
+
     for i in range(len(seq)):
+
+        # return a score of -1 if N is in the sequence
         if (seq[i]=="N"):
             return -1
+        
         score += matrix[nucs[seq[i]]][i]
+
     return score
 
 # takes params
@@ -158,14 +185,18 @@ def MotifFind():
         # find the number of peak sequences that match the motif 
         peaks_count = FindMatch(motifinfo, SeqData.PeakSeq)
         list.append(peaks_count)
+        list.append(str(peaks_count*100/309) + "%")
 
         # find the number of background sequences that match the motif
         bg_count = FindMatch(motifinfo, SeqData.BackgroundSeq)
         list.append(bg_count)
+        list.append(str(bg_count*100/309) + "%")
+
+        list.append(motifinfo[-1])
 
         # Fisher Exact test to calculate the p-value
         pval = ComputeEnrichment(len(SeqData.PeakSeq), peaks_count, len(SeqData.BackgroundSeq), bg_count)
-        list.append(pval)
+        list.insert(1, pval)
 
         motif_list.append(list)
 
@@ -181,12 +212,14 @@ def MotifFind():
         for i in SeqData.PeakSeq:
             output.write(i+"\n")
     
-    # print(SeqData.PeakSeq)
-
+    # output motif logo graphs
     Output(motif_list[:5], motifs)
 
     return result
 
 result = MotifFind()
-df = pd.DataFrame(result, columns = ['Motif Name', '# of peak sequences', '# of background sequences', 'p-value'])
-print(df)
+
+df = pd.DataFrame(result, columns = ['Motif Name', 'p-value', '# Target Sequences', "% of Target Sequences", 
+                                     '# Background Sequences',"% of Background Sequences", "Motif Documentation"])
+
+df.to_csv(outtable+".csv")
