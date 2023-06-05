@@ -81,6 +81,7 @@ class SequenceData:
             
             # get basic peak sequence information
             pllist = pl.split("\t")
+            print(pllist)
             chrom = pllist[0]
             # chromID = chrom.strip()
             chromID = chrom[3:]
@@ -165,11 +166,12 @@ def Output(top5motif, motifs):
     
     
 
-# still need to figure out where to get the motif and stuff 
+
 def MotifFind():
     SeqData = SequenceData()
     SeqData.GetRefGenome()
     SeqData.FindSeq(peakfile)
+    # print(SeqData.PeakSeq)
     motifs = pickle.load(open(jasparfile, "rb"))
 
     motif_list = []
@@ -189,13 +191,6 @@ def MotifFind():
 
         # find the number of background sequences that match the motif
         bg_count = FindMatch(motifinfo, SeqData.BackgroundSeq)
-
-        # if peaks_count < bg_count:
-        #     continue
-
-        list.append(peaks_count)
-        # print("peaks_count: " + str(peaks_count))
-        list.append(str(peaks_count*100/len(SeqData.PeakSeq)) + "%")
         list.append(bg_count)
         # print("bg_count: " + str(bg_count))
         list.append(str(bg_count*100/len(SeqData.BackgroundSeq)) + "%")
