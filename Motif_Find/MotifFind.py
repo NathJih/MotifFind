@@ -121,7 +121,6 @@ def ScoreSeq(matrix,seq):
         
         score += matrix[nucs[seq[i]]][i]
 
-    print(score)
     return score
 
 # takes params
@@ -173,7 +172,6 @@ def MotifFind():
     SeqData = SequenceData()
     SeqData.GetRefGenome()
     SeqData.FindSeq(peakfile)
-    print(SeqData.PeakSeq)
     motifs = pickle.load(open(jasparfile, "rb"))
 
     motif_list = []
@@ -191,12 +189,12 @@ def MotifFind():
         # find the number of peak sequences that match the motif 
         peaks_count = FindMatch(motifinfo, SeqData.PeakSeq)
         list.append(peaks_count)
-        list.append(str(peaks_count*100/309) + "%")
+        list.append(str(peaks_count*100/len(SeqData.PeakSeq)) + "%")
 
         # find the number of background sequences that match the motif
         bg_count = FindMatch(motifinfo, SeqData.BackgroundSeq)
         list.append(bg_count)
-        list.append(str(bg_count*100/309) + "%")
+        list.append(str(bg_count*100/len(SeqData.BackgroundSeq)) + "%")
 
         list.append(motifinfo[-1])
 
