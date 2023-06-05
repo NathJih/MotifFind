@@ -59,4 +59,4 @@ python MotifFind.py <peak_input_file> <output_file> -r <reference_sequence_pickl
 `[-o <peakseq_output_file>]`: output a `.txt` file with specific peak file sequences. Specify the `.txt` file name after `-o`
 
 Example usage: (note, make sure you are in the Motif_Find directory)
-`python MotifFind.py ../TestFiles/CTCF.bed output.html` 
+`python MotifFind.py ../TestFiles/CTCF.bed CTCF_MFresults` 
