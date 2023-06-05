@@ -9,7 +9,6 @@ import logomaker as lm
 import seqlogo
 import os
 import getopt
-import math
 
 o_flag = False
 
@@ -82,12 +81,9 @@ class SequenceData:
             
             # get basic peak sequence information
             pllist = pl.split("\t")
-            print(pllist)
             chrom = pllist[0]
-            chromID = chrom.strip()
-            if "chr" in chromID:
-                chromID = chromID[3:]
-            # chromID = chrom[3:]
+            # chromID = chrom.strip()
+            chromID = chrom[3:]
             ref_genome = self.RefG["chromosome" + chromID]
 
             # get peak sequence
@@ -98,6 +94,8 @@ class SequenceData:
             # get a random background sequence
             seqlen = endSite - startSite
             chrlen = len(ref_genome)
+            # print("chrlen: " + str(chrlen))
+            # print("seqlen: " + str(seqlen))
             bgstart = rand.randint(0, chrlen-seqlen)
             self.BackgroundSeq.append(ref_genome[bgstart: bgstart+seqlen])
         
@@ -188,12 +186,18 @@ def MotifFind():
 
         # find the number of peak sequences that match the motif 
         peaks_count = FindMatch(motifinfo, SeqData.PeakSeq)
-        list.append(peaks_count)
-        list.append(str(peaks_count*100/len(SeqData.PeakSeq)) + "%")
 
         # find the number of background sequences that match the motif
         bg_count = FindMatch(motifinfo, SeqData.BackgroundSeq)
+
+        # if peaks_count < bg_count:
+        #     continue
+
+        list.append(peaks_count)
+        # print("peaks_count: " + str(peaks_count))
+        list.append(str(peaks_count*100/len(SeqData.PeakSeq)) + "%")
         list.append(bg_count)
+        # print("bg_count: " + str(bg_count))
         list.append(str(bg_count*100/len(SeqData.BackgroundSeq)) + "%")
 
         list.append(motifinfo[-1])
@@ -206,8 +210,15 @@ def MotifFind():
 
         # print("Processing......  " + str(i) + "/" + str(nummotif) + "\n")
 
+    print(SeqData.PeakSeq)
+    print(SeqData.BackgroundSeq)
+
     motif_list.sort(reverse=False, key=sortFn)
     
+    for i in motif_list:
+        if i[0]=="MA1517.1":
+            print(i)
+
     result = motif_list[0:5]
 
     # Output the peak sequences in a file specified by user
