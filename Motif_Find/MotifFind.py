@@ -82,7 +82,7 @@ class SequenceData:
             
             # get basic peak sequence information
             pllist = pl.split("\t")
-            print(pllist)
+            # print(pllist)
             chrom = pllist[0]
             chromID = chrom.strip()
             if "chr" in chromID:
@@ -121,7 +121,7 @@ def ScoreSeq(matrix,seq):
         
         score += matrix[nucs[seq[i]]][i]
 
-    print(score)
+    # print(score)
     return score
 
 # takes params
@@ -168,12 +168,12 @@ def Output(top5motif, motifs):
     
     
 
-# still need to figure out where to get the motif and stuff 
+
 def MotifFind():
     SeqData = SequenceData()
     SeqData.GetRefGenome()
     SeqData.FindSeq(peakfile)
-    print(SeqData.PeakSeq)
+    # print(SeqData.PeakSeq)
     motifs = pickle.load(open(jasparfile, "rb"))
 
     motif_list = []
@@ -206,7 +206,7 @@ def MotifFind():
 
         motif_list.append(list)
 
-        # print("Processing......  " + str(i) + "/" + str(nummotif) + "\n")
+        print("Processing......  " + str(i) + "/" + str(nummotif) + "\n")
 
     motif_list.sort(reverse=False, key=sortFn)
     
@@ -229,4 +229,4 @@ df = pd.DataFrame(result, columns = ['Motif Name', 'p-value', '# Target Sequence
                                      '# Background Sequences',"% of Background Sequences", "Motif Documentation"])
 
 df.to_csv(outtable + "/" + outtable + ".csv")
-print(df)
+# print(df)
