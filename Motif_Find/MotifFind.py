@@ -163,9 +163,6 @@ def Output(top5motif, motifs):
         lm.Logo(pwm, font_name='Arial')
         plt.savefig(outtable + '/' + motif[0] + '.jpg', format='jpg')
 
-    
-    
-
 
 def MotifFind():
     SeqData = SequenceData()
@@ -191,6 +188,14 @@ def MotifFind():
 
         # find the number of background sequences that match the motif
         bg_count = FindMatch(motifinfo, SeqData.BackgroundSeq)
+
+        if peaks_count < bg_count:
+            continue
+
+        list.append(peaks_count)
+        # print("bg_count: " + str(bg_count))
+        list.append(str(peaks_count*100/len(SeqData.PeakSeq)) + "%")
+
         list.append(bg_count)
         # print("bg_count: " + str(bg_count))
         list.append(str(bg_count*100/len(SeqData.BackgroundSeq)) + "%")
