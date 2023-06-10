@@ -6,7 +6,6 @@ import sys
 import pickle
 import pandas as pd
 import logomaker as lm
-import seqlogo
 import os
 import getopt
 
@@ -81,10 +80,10 @@ class SequenceData:
             
             # get basic peak sequence information
             pllist = pl.split("\t")
-            print(pllist)
+            # print(pllist)
             chrom = pllist[0]
-            # chromID = chrom.strip()
-            chromID = chrom[3:]
+            chromID = chrom.strip()
+            # chromID = chrom[3:]
             ref_genome = self.RefG["chromosome" + chromID]
 
             # get peak sequence
@@ -208,16 +207,16 @@ def MotifFind():
 
         motif_list.append(list)
 
-        # print("Processing......  " + str(i) + "/" + str(nummotif) + "\n")
+        print("Processing......  " + str(i) + "/" + str(nummotif) + "\n")
 
-    print(SeqData.PeakSeq)
-    print(SeqData.BackgroundSeq)
+    # print(SeqData.PeakSeq)
+    # print(SeqData.BackgroundSeq)
 
     motif_list.sort(reverse=False, key=sortFn)
     
-    for i in motif_list:
-        if i[0]=="MA1517.1":
-            print(i)
+    # for i in motif_list:
+    #     if i[0]=="MA1517.1":
+    #         print(i)
 
     result = motif_list[0:5]
 
