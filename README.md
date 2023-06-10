@@ -28,6 +28,8 @@ Motif_Find is the mean directory that you need to use to run the tool. Motif_Fin
 #### Benchmark: contain the peak file, Jaspar dataset, and output to run our benchmarking result.
 #### TestFiles: contain several small test files we used to test our tool during implementation
 
+<br>
+
 ## Usage 
 
 ### Step 1: Prepare the reference genome
@@ -35,7 +37,8 @@ To run motif finding, you will first need the reference genome pickle file, whic
 ```
 python GetRefGenome.py <reference_genome_fasta_file> <Output_path>
 ```
-We recommand to store your reference genome output in your current (Motif_Find) directory
+We recommand to store your reference genome output in your current (Motif_Find) directory <br>
+Example usage: (note, make sure you are in the Motif_Find directory) `python GetRefGenome.py GRCh38.p14.fna GRCh38p14` 
 <br>
 <br>
 
@@ -68,16 +71,17 @@ python MotifFind.py <peak_input_file> <output_file> -r <reference_sequence_pickl
 Example usage: (note, make sure you are in the Motif_Find directory)
 `python MotifFind.py ../TestFiles/CTCF.bed CTCF_MFresults -r GRCh38p14.p` 
 
+<br>
+
 ## Examples to run the tool
 ### Run our benchmarking tool
-Inorder to run our benchmarking tool, you will first need to download the mouse mm39 reference genome. Move the reference genome fasta file into your local Motif_Find folder, and run the following command: 
+To run our benchmarking tool, please first download the preprocessed mouse mm39 reference genome from this link (https://drive.google.com/file/d/10EQK9ig_P59iKwBHlHM9BuOUDyTsXlGo/view?usp=drive_link), move the downloaded file into your local Benchmark folder, and run the following command: 
 <br>
 <br>
 (Note: in these commands, you will use preprocessed files inside folder Benchmark. We have already processed the klf4 peak file using HOMER in Jupyter Hub by running the command `pos2bed.pl peaks.txt > klf4.bed`)
 ```
-python GetRefGenome.py <mouse_ref_gen_fasta> GRCm39.p
 python Jaspar.py ../Benchmark/JASPARall.txt ../Benchmark/JASPARall.p
-python MotifFind.py ../benchmark/klf4.bed klf4_MFresults -j ../Benchmark/JASPARall.p
+python MotifFind.py ../benchmark/klf4.bed klf4_MFresults -r ../Benchmark/GRCm39.p -j ../Benchmark/JASPARall.p
 ```
 
 ### Run our sample peak file of transcription factor POLR2A
