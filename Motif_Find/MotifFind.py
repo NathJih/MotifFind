@@ -83,7 +83,8 @@ class SequenceData:
             # print(pllist)
             chrom = pllist[0]
             chromID = chrom.strip()
-            # chromID = chrom[3:]
+            if chromID[0:3] == "chr":
+                chromID = chrom[3:]
             ref_genome = self.RefG["chromosome" + chromID]
 
             # get peak sequence
@@ -94,8 +95,6 @@ class SequenceData:
             # get a random background sequence
             seqlen = endSite - startSite
             chrlen = len(ref_genome)
-            # print("chrlen: " + str(chrlen))
-            # print("seqlen: " + str(seqlen))
             bgstart = rand.randint(0, chrlen-seqlen)
             self.BackgroundSeq.append(ref_genome[bgstart: bgstart+seqlen])
         
@@ -167,7 +166,6 @@ def MotifFind():
     SeqData = SequenceData()
     SeqData.GetRefGenome()
     SeqData.FindSeq(peakfile)
-    # print(SeqData.PeakSeq)
     motifs = pickle.load(open(jasparfile, "rb"))
 
     motif_list = []
@@ -188,6 +186,8 @@ def MotifFind():
         # find the number of background sequences that match the motif
         bg_count = FindMatch(motifinfo, SeqData.BackgroundSeq)
 
+        print("Processing......  " + str(i) + "/" + str(nummotif))
+
         if peaks_count < bg_count:
             continue
 
@@ -207,16 +207,7 @@ def MotifFind():
 
         motif_list.append(list)
 
-        print("Processing......  " + str(i) + "/" + str(nummotif) + "\n")
-
-    # print(SeqData.PeakSeq)
-    # print(SeqData.BackgroundSeq)
-
     motif_list.sort(reverse=False, key=sortFn)
-    
-    # for i in motif_list:
-    #     if i[0]=="MA1517.1":
-    #         print(i)
 
     result = motif_list[0:5]
 
